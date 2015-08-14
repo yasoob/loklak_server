@@ -72,10 +72,11 @@ public class PushServlet extends HttpServlet {
         }
 
         Map<String, byte[]> m = RemoteAccess.getPostMap(request);
-        byte[] data = m.get("data");
+        //byte[] data = m.get("data");
+        String data = post.get("data", "");
         String callback = UTF8.String(m.get("callback"));
         boolean jsonp = callback != null && callback.length() > 0;
-        if (data == null || data.length == 0) {response.sendError(400, "your request does not contain a data object. The data object should contain data to be pushed. The format of the data object is JSON; it is exactly the same as the JSON search result"); return;}
+        if (data == null || data.length() == 0) {response.sendError(400, "your request does not contain a data object. The data object should contain data to be pushed. The format of the data object is JSON; it is exactly the same as the JSON search result"); return;}
         
         // parse the json data
         int recordCount = 0, newCount = 0, knownCount = 0;
